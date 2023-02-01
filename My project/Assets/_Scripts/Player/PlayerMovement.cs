@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public ObjectClass objectHolded;
     public GameObject grabbed;
     SpriteRenderer grabbedSprite;
     Rigidbody2D rb;
@@ -24,54 +25,29 @@ public class PlayerMovement : MonoBehaviour
     {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
-
+        float speedAux=speed;
+        if (x != 0 && y != 0)
+        {
+            speed *= 0.8f;
+        }
         rb.velocity = new Vector2(x, y) * speed;
-
-        Grab();
-
-        //if (x!=0)
-        //{
-        //    if(y != 0)
-        //    {
-        //        rb.velocity = new Vector2(0, y) * speed;
-        //    }
-        //    else
-        //    {
-        //        rb.velocity = new Vector2(x, 0) * speed;
-
-        //    }
-        //}
-        //if (y != 0)
-        //{
-        //    if (x != 0)
-        //    {
-        //        rb.velocity = new Vector2(x, 0) * speed;
-        //    }
-        //    else
-        //    {
-        //        rb.velocity = new Vector2(0, y) * speed;
-
-        //    }
-        //}
-
+        speed = speedAux;
+        ObjectCarrying();
     }
-    private void Grab()
+    private void ObjectCarrying()
     {
         if (Input.GetKeyDown(KeyCode.E)&&interactable!=null)
         {
             if(interactable.hasItem)
             {
                 grabbed.SetActive(true);
-                interactable.hasItem = false;
-                grabbedSprite.sprite = interactable.itemSprite.sprite;
-                interactable.itemSprite.sprite = null;
+                objectHolded = interactable.GrabObject(grabbedSprite);
             }
             else
             {
                 grabbed.SetActive(false);
-                interactable.hasItem = true;
-                interactable.itemSprite.sprite = grabbedSprite.sprite;
-                grabbedSprite.sprite = null;
+                interactable.InsertObject(objectHolded,grabbedSprite);
+                objectHolded = ObjectClass.None;
             }
               
         }
