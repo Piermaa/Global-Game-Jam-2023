@@ -10,13 +10,25 @@ public class Interactable : MonoBehaviour
 {
     public ObjectClass objectRequired;
     public ObjectClass objectHolded;
-    public bool hasItem;
-    public SpriteRenderer itemSprite;
+    public SpriteRenderer objectSprite;
 
     // Start is called before the first frame update
     void Start()
     {
-        itemSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        objectSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+
+        //SE ESTABLECE EL SPRITE AUTOMATICAMENTE AL INICIAR EL NIVEL DEPENDIENDO DE QUE SE INFORMO QUE CONTIENE EN EL INSPECTOR
+        switch (objectHolded)
+        {
+            case ObjectClass.None:
+                objectSprite.sprite = null;
+                break;
+
+            case ObjectClass.Green:
+                break;
+            case ObjectClass.Red:
+                break;
+        }
     }
 
 
@@ -25,13 +37,12 @@ public class Interactable : MonoBehaviour
     /// Se llama cuando el jugador agarra el objeto en el slot
     /// </summary>
     /// <param name="objectSpriteRenderer"></param>
-    /// <returns></returns>
+    /// <returns> Devuelve la clase de objeto que ahora tiene en la mano el jugador </returns>
     public ObjectClass GrabObject(SpriteRenderer objectSpriteRenderer)
     {
-        objectSpriteRenderer.sprite = itemSprite.sprite;
-        hasItem = false;
-        itemSprite.sprite = null;
-        ObjectClass objectClass = objectHolded;
+        objectSpriteRenderer.sprite = objectSprite.sprite;
+        objectSprite.sprite = null;
+        ObjectClass objectClass = objectHolded; //AUX
         objectHolded = ObjectClass.None;
         return objectClass;
     }
@@ -46,8 +57,7 @@ public class Interactable : MonoBehaviour
     public void InsertObject(ObjectClass objectInserted,SpriteRenderer objectsprite)
     {
         objectHolded = objectInserted;
-        hasItem = true;
-        itemSprite.sprite = objectsprite.sprite;
+        objectSprite.sprite = objectsprite.sprite;
         objectsprite.sprite = null;
     }
 
