@@ -4,16 +4,24 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public enum PlayerHideState
+    {
+        Nothiding,Hiding,CanHide
+    }
+    public PlayerHideState hideState;
     public ObjectClass objectHolded;
     public GameObject grabbedObject;
     SpriteRenderer grabbedSprite;
     Rigidbody2D rb;
     public float speed;
-
-    bool canGrab;
-    bool canInsert;
-    private Interactable interactable; 
+    private Interactable interactable;
+    public static PlayerMovement Instance;
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        Instance = this;   
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -37,39 +45,63 @@ public class PlayerMovement : MonoBehaviour
     }
     private void ObjectCarrying()
     {
-        if (Input.GetKeyDown(KeyCode.E)&&interactable!=null)
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            //SI INTERACTABLE CONTIENE ALGUN OBJETO Y EL JUGADOR NO TIENE NINGUNO EN LA MANO:
-            if(!(interactable.objectHolded==ObjectClass.None) && objectHolded==ObjectClass.None)
+
+            if(interactable!=null)
             {
-                grabbedObject.SetActive(true);
-                objectHolded = interactable.GrabObject(grabbedSprite);
+                //SI INTERACTABLE CONTIENE ALGUN OBJETO Y EL JUGADOR NO TIENE NINGUNO EN LA MANO:
+                if (!(interactable.objectHolded == ObjectClass.None) && objectHolded == ObjectClass.None)
+                {
+                    grabbedObject.SetActive(true);
+                    objectHolded = interactable.GrabObject(grabbedSprite);
+                }
+                //SI EL JUGADOR SI TIENE UN ITEM Y EL INTERACTABLE NO CONTIENE NINGUNO
+                else if (interactable.objectHolded == ObjectClass.None && !(objectHolded == ObjectClass.None))
+                {
+                    grabbedObject.SetActive(false);
+                    interactable.InsertObject(objectHolded, grabbedSprite);
+                    objectHolded = ObjectClass.None;
+                }
             }
-            //SI EL JUGADOR SI TIENE UN ITEM Y EL INTERACTABLE NO CONTIENE NINGUNO
-            else if(interactable.objectHolded == ObjectClass.None && !(objectHolded == ObjectClass.None))
+
+            if(hideState==PlayerHideState.CanHide)
             {
-                grabbedObject.SetActive(false);
-                interactable.InsertObject(objectHolded,grabbedSprite);
-                objectHolded = ObjectClass.None;
+                hideState= PlayerHideState.Hiding;
+                EnemyManager.Instance.PlayerHid();
             }
+           
               
         }
    
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Pickup"))
+        switch(collision.tag)
         {
-            //SE GUARDA EL OBJETO CON EL QUE SE PUEDE INTERACTUAR AL ENTRAR EN COLISION
-            collision.TryGetComponent<Interactable>(out interactable);
+            case "Pickup":
+                collision.TryGetComponent<Interactable>(out interactable);
+                break;
+            case "HideSpot":
+                hideState = PlayerHideState.CanHide;
+                break;
         }
+
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Pickup"))
+        switch (collision.tag)
         {
-            interactable = null;
+            case "Pickup":
+                interactable = null;
+
+                break;
+            case "HideSpot":
+                hideState= PlayerHideState.Nothiding;
+                break;
+
         }
+    
     }
 
 }

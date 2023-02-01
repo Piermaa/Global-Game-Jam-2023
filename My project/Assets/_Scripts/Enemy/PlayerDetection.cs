@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class PlayerDetection : MonoBehaviour
 {
+    EnemyManager enemyManager;
+    public bool playerInVision;
     MovementController2D movementController2D;
     PatrolEnemy enemy;
     public float fullDetectionDistance;
+    private PlayerMovement playerMovement;
     // Start is called before the first frame update
     void Start()
     {
         movementController2D = GetComponentInParent<MovementController2D>();
         enemy=GetComponentInParent<PatrolEnemy>();
+        enemyManager = EnemyManager.Instance;
+        playerMovement = PlayerMovement.Instance;
     }
 
     // Update is called once per frame
@@ -20,7 +25,7 @@ public class PlayerDetection : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
        
         if (other.CompareTag("Player"))
@@ -29,8 +34,12 @@ public class PlayerDetection : MonoBehaviour
             if(Vector3.Distance(enemy.transform.position,other.transform.position)<=fullDetectionDistance)
             {
                 //persecucion
-                
-                print("Player is near");
+                if(playerMovement.hideState!=PlayerMovement.PlayerHideState.Hiding)
+                {
+                    enemyManager.Chase();
+                    print("Player is near");
+                }
+               
             }
             else
             {
@@ -38,12 +47,21 @@ public class PlayerDetection : MonoBehaviour
                 print("Investigate!!");
                 //va a la pos del player
             }
+            playerInVision = true;
         }
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            playerInVision = false;
+        }
+    }
     private void OnDrawGizmos()
     {
-        Vector3 enemyCenter = transform.position + Vector3.up * 2.3f;
-        Debug.DrawLine(enemyCenter,   enemyCenter + Vector3.down * 2   ,   Color.cyan);
+
+        //Vector3 enemyCenter = enemy.transform.position;
+        //Debug.DrawLine(enemyCenter,   enemyCenter + Vector3.up * 3.2f   ,   Color.cyan);
     }
 }

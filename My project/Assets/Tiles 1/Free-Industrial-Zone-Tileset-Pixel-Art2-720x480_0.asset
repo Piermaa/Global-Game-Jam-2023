@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Free-Industrial-Zone-Tileset-Pixel-Art2-720x480_0
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 921516491, guid: a172a6f228167ff48b6b3cb308c51e91, type: 3}
-  m_Color: {r: 1, g: 0.3160377, b: 0.3160377, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0
