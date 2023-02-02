@@ -98,7 +98,7 @@ public class PatrolEnemy : MonoBehaviour
     {
 
         //return movementController2D.pathLeftToGo.Count > 0 && Vector3.Distance(movementController2D.pathLeftToGo.Last(), transform.position) < 0.5f
-        return Vector3.Distance(transform.position,agent.destination)<1f;
+        return Vector3.Distance(transform.position,agent.destination)<0.5f;
 
 
     }

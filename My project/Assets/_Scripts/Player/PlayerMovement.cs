@@ -38,10 +38,12 @@ public class PlayerMovement : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
         
-       
+
+        
         if (hideState!=PlayerHideState.Hiding)
         {
-            rb.velocity = new Vector2(x, y) * speed;
+            
+            rb.velocity = Vector2.zero+ new Vector2(x, y) * speed;
         }
     
      
