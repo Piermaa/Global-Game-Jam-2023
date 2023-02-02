@@ -7,20 +7,16 @@ using UnityEngine.AI;
 
 public class PatrolEnemy : MonoBehaviour
 {
-    NavMeshAgent agent;
+
     public enum EnemyState
     {
         Patrol,Investigate,Chase, Waiting
     }
-    public PlayerDetection playerDetection;
-    Transform playerTransform;
-    Vector3 lastPos;
-    float samePositionTimer;
-    Vector3 investigationPosition =Vector3.zero;
-    public EnemyState enemyState;
-    MovementController2D movementController2D;
-    public Transform[] waypoints;
-    int index;
+    [Header("Player")]
+    [HideInInspector] public PlayerDetection playerDetection;
+    private Transform playerTransform;
+    private float samePositionTimer;
+  
     public float patrolSpeed;
     public float chaseSpeed;
     public float investigateSpeed;
@@ -28,12 +24,14 @@ public class PatrolEnemy : MonoBehaviour
     float chaseTimer;
     public float chaseRefreshCooldown=2f;
 
-    Vector3 playerPosition;
-    private void Awake()
-    {
-        movementController2D = GetComponent<MovementController2D>();
-      
-    }
+    [Header("Navigation")]
+    public Transform[] waypoints;
+    public EnemyState enemyState;
+    private int index;
+    private NavMeshAgent agent;
+    private Vector3 investigationPosition = Vector3.zero;
+    private Vector3 lastPos;
+ 
     // Start is called before the first frame update
     void Start()
     {
@@ -41,8 +39,6 @@ public class PatrolEnemy : MonoBehaviour
         agent.updateRotation = false;
         agent.updateUpAxis= false;
         playerDetection = GetComponent<PlayerDetection>();
-
-
         agent.SetDestination(waypoints[index].position);
     }
 
@@ -51,15 +47,25 @@ public class PatrolEnemy : MonoBehaviour
     void Update()
     {
         {
-            //transform.position = Vector3.MoveTowards(transform.position, waypoints[index].position, Time.deltaTime * speed);
+
+
+            Vector3 dirToLookAt = agent.destination;
+            Vector3 diff = new Vector3(dirToLookAt.x, dirToLookAt.y) - transform.position;
+            diff.Normalize();
+
+            float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+
+            transform.position = new Vector3(transform.position.x, transform.position.y, 0); //SE MUEVE EN Z NO SE PORQUE NO COMO ARREGLARLO OAAA
 
             //Dependiendo de en que estado esta el enemigo, corrobora si a cada frame si esta en la posicion indicada
             switch (enemyState)
             {
                 case EnemyState.Patrol:
+                 
                     if (ReachedDestiny(waypoints[index].position))
                     {
-                        index = index < 1 ? index++ : 0;
+                        index = index < 1 ? 1 : 0;
                         agent.SetDestination(waypoints[index].position);
                         //movementController2D.GetMoveCommand(waypoints[index].position);
                     }
@@ -87,14 +93,16 @@ public class PatrolEnemy : MonoBehaviour
             samePositionTimer = lastPos == transform.position ? samePositionTimer + Time.deltaTime : 0;
             lastPos = transform.position;
         }
-
+        if (Vector3.Distance( agent.destination,transform.position)<1)
+        {
+            print("Near");
+        }
     }
     public bool ReachedDestiny(Vector3 pos)
     {
 
-        //return movementController2D.pathLeftToGo.Count > 0 && Vector3.Distance(movementController2D.pathLeftToGo.Last(), transform.position) < 0.5f;
-
-        return Vector3.Distance(transform.position,pos)<1f;
+        //return movementController2D.pathLeftToGo.Count > 0 && Vector3.Distance(movementController2D.pathLeftToGo.Last(), transform.position) < 0.5f
+        return Vector3.Distance(transform.position,pos)<0.6f;
 
 
     }
@@ -107,7 +115,7 @@ public class PatrolEnemy : MonoBehaviour
         //    BeginPatrolling();
         //}
         //lastPos = transform.position;
-        
+       // transform.position = new Vector3(transform.position.x, transform.position.y, 0);
     }
     /// <summary>
     /// Se establece una posicion a investigar, se llama cuando se ve de lejos al jugador
@@ -119,16 +127,15 @@ public class PatrolEnemy : MonoBehaviour
         {
             enemyState = EnemyState.Investigate;
             investigationPosition = positionToInvestigate;
-            movementController2D.GetMoveCommand(new Vector2(positionToInvestigate.x, positionToInvestigate.y));
+            agent.SetDestination(positionToInvestigate);
         }
 
     }
 
     public void Chase(Transform player)
     {
-        
         playerTransform = player;
-        playerPosition =playerTransform.position;
+        agent.SetDestination(player.position);
         enemyState = EnemyState.Chase;
     }
     
