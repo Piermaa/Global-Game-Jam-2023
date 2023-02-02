@@ -78,7 +78,7 @@ public class EnemyManager : MonoBehaviour
     {
         foreach (var e in enemies)
         {
-            if (e.playerDetection.playerInVision)
+            if (e.playerDetection.PlayerInVision())
             {
                 return true;
             }

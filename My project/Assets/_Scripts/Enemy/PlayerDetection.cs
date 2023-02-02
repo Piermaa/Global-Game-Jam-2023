@@ -10,12 +10,14 @@ public class PlayerDetection : MonoBehaviour
     PatrolEnemy enemy;
     public float fullDetectionDistance;
     private PlayerMovement playerMovement;
+    Transform playerTransform;
     // Start is called before the first frame update
     void Start()
     {
         enemy=GetComponentInParent<PatrolEnemy>();
         enemyManager = EnemyManager.Instance;
         playerMovement = PlayerMovement.Instance;
+        playerTransform = playerMovement.transform;
     }
 
     // Update is called once per frame
@@ -85,6 +87,9 @@ public class PlayerDetection : MonoBehaviour
             
         
     }
-       
-    
+
+    public bool PlayerInVision()
+    {
+        return NoWallsBetween(playerTransform)&&playerInVision;
+    }
 }
