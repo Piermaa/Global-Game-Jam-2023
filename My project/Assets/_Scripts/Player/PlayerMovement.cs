@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    Transform hidePosition;
     public enum PlayerHideState
     {
         Nothiding,Hiding,CanHide
@@ -33,14 +34,14 @@ public class PlayerMovement : MonoBehaviour
     {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
-        float speedAux=speed;
-        if (x != 0 && y != 0)
+        
+       
+        if (hideState!=PlayerHideState.Hiding)
         {
-            //AL MOVERSE EN DIAGONAL IBA DEMASIADO RAPIDO ENTONCES BAJE LA VELOCIDAD EN CASO DE QUE VAYA EN DIAGONAL
-            speed *= 0.8f;
+            rb.velocity = new Vector2(x, y) * speed;
         }
-        rb.velocity = new Vector2(x, y) * speed;
-        speed = speedAux;
+    
+     
         ObjectCarrying();
     }
     private void ObjectCarrying()
@@ -65,10 +66,15 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            if(hideState==PlayerHideState.CanHide)
+            if (hideState == PlayerHideState.CanHide)
             {
-                hideState= PlayerHideState.Hiding;
+                hideState = PlayerHideState.Hiding;
                 EnemyManager.Instance.PlayerHid();
+                transform.position = hidePosition.position;
+            }
+            else if (hideState == PlayerHideState.Hiding)
+            {
+                hideState = PlayerHideState.CanHide;
             }
            
               
@@ -83,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
                 collision.TryGetComponent<Interactable>(out interactable);
                 break;
             case "HideSpot":
+                hidePosition = collision.transform;
                 hideState = PlayerHideState.CanHide;
                 break;
         }

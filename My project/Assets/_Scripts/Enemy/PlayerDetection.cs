@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class PlayerDetection : MonoBehaviour
 {
+    public Transform rayCastOrigin;
     EnemyManager enemyManager;
     public bool playerInVision;
-    MovementController2D movementController2D;
     PatrolEnemy enemy;
     public float fullDetectionDistance;
     private PlayerMovement playerMovement;
     // Start is called before the first frame update
     void Start()
     {
-        movementController2D = GetComponentInParent<MovementController2D>();
         enemy=GetComponentInParent<PatrolEnemy>();
         enemyManager = EnemyManager.Instance;
         playerMovement = PlayerMovement.Instance;
@@ -30,24 +29,28 @@ public class PlayerDetection : MonoBehaviour
        
         if (other.CompareTag("Player"))
         {
-           
-            if(Vector3.Distance(enemy.transform.position,other.transform.position)<=fullDetectionDistance)
+            if (NoWallsBetween(other.transform))
             {
-                //persecucion
-                if(playerMovement.hideState!=PlayerMovement.PlayerHideState.Hiding)
+                Debug.Log("PlayerSeen");
+                if (Vector3.Distance(enemy.transform.position, other.transform.position) <= fullDetectionDistance && playerMovement.hideState != PlayerMovement.PlayerHideState.Hiding)
                 {
-                    enemyManager.Chase();
-                    print("Player is near");
+                    playerInVision = true;
+                    //persecucion
+                    
+                        enemyManager.Chase();
+                        print("Player is near");
+                    
+
                 }
-               
+                else
+                {
+                    enemy.Investigate(other.transform.position);
+                    print("Investigate!!");
+                    //va a la pos del player
+                }
+             
             }
-            else
-            {
-                enemy.Investigate(other.transform.position);
-                print("Investigate!!");
-                //va a la pos del player
-            }
-            playerInVision = true;
+       
         }
     }
 
@@ -64,4 +67,24 @@ public class PlayerDetection : MonoBehaviour
         //Vector3 enemyCenter = enemy.transform.position;
         //Debug.DrawLine(enemyCenter,   enemyCenter + Vector3.up * 3.2f   ,   Color.cyan);
     }
+
+    public bool NoWallsBetween(Transform player)
+    {
+
+        Vector3 direction = player.position - rayCastOrigin.position;
+        Ray2D ray = new Ray2D(rayCastOrigin.position, direction);
+
+        Debug.DrawRay(rayCastOrigin.position, direction,
+           Color.green, Time.deltaTime, true);
+
+        RaycastHit2D raycastHit= Physics2D.Raycast(rayCastOrigin.position,direction);
+       
+        
+        
+        return raycastHit.collider.tag=="Player" && enemy.enemyState!=PatrolEnemy.EnemyState.Stunned;
+            
+        
+    }
+       
+    
 }

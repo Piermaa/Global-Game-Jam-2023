@@ -10,11 +10,11 @@ public class PatrolEnemy : MonoBehaviour
 
     public enum EnemyState
     {
-        Patrol,Investigate,Chase, Waiting
+        Patrol,Investigate,Chase, Waiting, Stunned 
     }
     [Header("Player")]
     [HideInInspector] public PlayerDetection playerDetection;
-    private Transform playerTransform;
+    public Transform playerTransform;
     private float samePositionTimer;
   
     public float patrolSpeed;
@@ -38,7 +38,7 @@ public class PatrolEnemy : MonoBehaviour
         agent = GetComponent <NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis= false;
-        playerDetection = GetComponent<PlayerDetection>();
+        playerDetection = GetComponentInChildren<PlayerDetection>();
         agent.SetDestination(waypoints[index].position);
     }
 
@@ -47,62 +47,56 @@ public class PatrolEnemy : MonoBehaviour
     void Update()
     {
         {
-
-
             Vector3 dirToLookAt = agent.destination;
             Vector3 diff = new Vector3(dirToLookAt.x, dirToLookAt.y) - transform.position;
             diff.Normalize();
 
             float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+            
 
             transform.position = new Vector3(transform.position.x, transform.position.y, 0); //SE MUEVE EN Z NO SE PORQUE NO COMO ARREGLARLO OAAA
 
             //Dependiendo de en que estado esta el enemigo, corrobora si a cada frame si esta en la posicion indicada
             switch (enemyState)
             {
+                
                 case EnemyState.Patrol:
                  
-                    if (ReachedDestiny(waypoints[index].position))
+                    if (ReachedDestiny())
                     {
-                        index = index < 1 ? 1 : 0;
+                        index = index < waypoints.Length - 1 ? index + 1 : 0;
                         agent.SetDestination(waypoints[index].position);
-                        //movementController2D.GetMoveCommand(waypoints[index].position);
+
                     }
+                    transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
                     //print("arrived");
                     break;
 
                 case EnemyState.Investigate:
-                    if (ReachedDestiny(investigationPosition))
+                    if (ReachedDestiny())
                     {
                         BeginPatrolling();
                     }
+                    transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
                     break;
 
                 case EnemyState.Chase:
-                    if (ReachedDestiny(investigationPosition))
-                    {
-                        investigationPosition = playerTransform.position;
-                        agent.SetDestination(investigationPosition);
-                        //movementController2D.GetMoveCommand(investigationPosition);
-
-                    }
+                    agent.SetDestination(playerTransform.position);
+                    transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
                     break;
+                   
             }
 
             samePositionTimer = lastPos == transform.position ? samePositionTimer + Time.deltaTime : 0;
             lastPos = transform.position;
         }
-        if (Vector3.Distance( agent.destination,transform.position)<1)
-        {
-            print("Near");
-        }
+      
     }
-    public bool ReachedDestiny(Vector3 pos)
+    public bool ReachedDestiny()
     {
 
         //return movementController2D.pathLeftToGo.Count > 0 && Vector3.Distance(movementController2D.pathLeftToGo.Last(), transform.position) < 0.5f
-        return Vector3.Distance(transform.position,pos)<0.6f;
+        return Vector3.Distance(transform.position,agent.destination)<1f;
 
 
     }
@@ -142,8 +136,20 @@ public class PatrolEnemy : MonoBehaviour
     public void BeginPatrolling()
     {
         enemyState = EnemyState.Patrol;
-        index = index < waypoints.Length ? index++ : 0;
-        agent.SetDestination(waypoints[index].position);
+        //index = index < waypoints.Length ? index++ : 0;
+        agent.SetDestination(waypoints[0].position);
     }
-   
+
+    public void Stun()
+    {
+        StartCoroutine(Stunned());
+    }
+    IEnumerator Stunned()
+    {
+        enemyState = EnemyState.Stunned;
+        agent.SetDestination(transform.position);
+        yield return new WaitForSeconds(3);
+        BeginPatrolling();
+
+    }
 }
