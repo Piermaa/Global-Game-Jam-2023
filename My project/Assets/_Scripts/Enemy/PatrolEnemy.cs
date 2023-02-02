@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 public class PatrolEnemy : MonoBehaviour
 {
-
+    Transform detectionCone;
     public enum EnemyState
     {
         Patrol,Investigate,Chase, Waiting, Stunned 
@@ -20,7 +20,8 @@ public class PatrolEnemy : MonoBehaviour
     public float patrolSpeed;
     public float chaseSpeed;
     public float investigateSpeed;
-
+    IEnumerator awaiting;
+    bool mustWait; 
     float chaseTimer;
     public float chaseRefreshCooldown=2f;
 
@@ -35,6 +36,7 @@ public class PatrolEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        detectionCone = transform.GetChild(0).transform;
         agent = GetComponent <NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis= false;
@@ -46,7 +48,7 @@ public class PatrolEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        {
+        
             Vector3 dirToLookAt = agent.destination;
             Vector3 diff = new Vector3(dirToLookAt.x, dirToLookAt.y) - transform.position;
             diff.Normalize();
@@ -56,42 +58,42 @@ public class PatrolEnemy : MonoBehaviour
 
             transform.position = new Vector3(transform.position.x, transform.position.y, 0); //SE MUEVE EN Z NO SE PORQUE NO COMO ARREGLARLO OAAA
 
-            //Dependiendo de en que estado esta el enemigo, corrobora si a cada frame si esta en la posicion indicada
-            switch (enemyState)
-            {
-                
-                case EnemyState.Patrol:
-                 
-                    if (ReachedDestiny())
-                    {
-                        index = index < waypoints.Length - 1 ? index + 1 : 0;
-                        agent.SetDestination(waypoints[index].position);
+        //Dependiendo de en que estado esta el enemigo, corrobora si a cada frame si esta en la posicion indicada
+        switch (enemyState)
+        {
 
-                    }
-                    transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
-                    //print("arrived");
-                    break;
+            case EnemyState.Patrol:
 
-                case EnemyState.Investigate:
-                    if (ReachedDestiny())
-                    {
-                        BeginPatrolling();
-                    }
-                    transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
-                    break;
+                if (ReachedDestiny())
+                {
+                    index = index < waypoints.Length - 1 ? index + 1 : 0;
+                    agent.SetDestination(waypoints[index].position);
 
-                case EnemyState.Chase:
-                    agent.SetDestination(playerTransform.position);
-                    transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
-                    break;
-                   
-            }
+                }
+                detectionCone.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+                //print("arrived");
+                break;
+
+            case EnemyState.Investigate:
+                if (ReachedDestiny())
+                {
+                    PlayerNotFound();
+                }
+                detectionCone.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+                break;
+
+            case EnemyState.Chase:
+                agent.SetDestination(playerTransform.position);
+                detectionCone.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+                break;
+
+        }
 
             samePositionTimer = lastPos == transform.position ? samePositionTimer + Time.deltaTime : 0;
             lastPos = transform.position;
-        }
-      
     }
+      
+    
     public bool ReachedDestiny()
     {
 
@@ -100,28 +102,19 @@ public class PatrolEnemy : MonoBehaviour
 
 
     }
-    private void LateUpdate()
-    {
-        //POR SI SE BUGUEA Y SE QUEDA QUIETO
-        //samePositionTimer = lastPos == transform.position ? samePositionTimer + Time.deltaTime : 0;
-        //if (samePositionTimer>=1.5f && (enemyState!=EnemyState.Waiting))
-        //{
-        //    BeginPatrolling();
-        //}
-        //lastPos = transform.position;
-       // transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-    }
+    
     /// <summary>
     /// Se establece una posicion a investigar, se llama cuando se ve de lejos al jugador
     /// </summary>
     /// <param name="positionToInvestigate"></param>
     public void Investigate(Vector3 positionToInvestigate)
     {
-        if (enemyState==EnemyState.Patrol)
+        if (enemyState==EnemyState.Patrol|| enemyState == EnemyState.Waiting)
         {
             enemyState = EnemyState.Investigate;
             investigationPosition = positionToInvestigate;
             agent.SetDestination(positionToInvestigate);
+            mustWait = true;
         }
 
     }
@@ -153,5 +146,26 @@ public class PatrolEnemy : MonoBehaviour
 
     }
 
+    void PlayerNotFound()
+    {
+        mustWait = false;
+        StartCoroutine(Waiting());
+    }
+    IEnumerator Waiting()
+    {
+        enemyState = EnemyState.Waiting;
+        yield return new WaitForSeconds(1);
+        detectionCone.rotation = Quaternion.Euler(0f, 0f,  90);
+        yield return new WaitForSeconds(1);
+        detectionCone.rotation = Quaternion.Euler(0f, 0f, - 90);
+
+        yield return new WaitForSeconds(1);
+        if(!mustWait)
+        {
+            BeginPatrolling();
+        }
+      
+        
+    }
 
 }

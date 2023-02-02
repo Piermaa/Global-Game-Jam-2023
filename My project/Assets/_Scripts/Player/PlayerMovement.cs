@@ -14,7 +14,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject grabbedObject;
     SpriteRenderer grabbedSprite;
     Rigidbody2D rb;
-    public float speed;
+    public float normalSpeed;
+    public float holdingObjectSpeed;
+    float speed;
     private Interactable interactable;
     public static PlayerMovement Instance;
     // Start is called before the first frame update
@@ -27,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         grabbedSprite = grabbedObject.GetComponent<SpriteRenderer>();
+        speed= normalSpeed;
     }
 
     // Update is called once per frame
@@ -56,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     grabbedObject.SetActive(true);
                     objectHolded = interactable.GrabObject(grabbedSprite);
+                    speed = holdingObjectSpeed;
                 }
                 //SI EL JUGADOR SI TIENE UN ITEM Y EL INTERACTABLE NO CONTIENE NINGUNO
                 else if (interactable.objectHolded == ObjectClass.None && !(objectHolded == ObjectClass.None))
@@ -63,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
                     grabbedObject.SetActive(false);
                     interactable.InsertObject(objectHolded, grabbedSprite);
                     objectHolded = ObjectClass.None;
+                    speed = normalSpeed;
                 }
             }
 

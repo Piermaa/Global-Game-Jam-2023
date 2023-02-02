@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Text;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -14,8 +15,11 @@ public class EnemyManager : MonoBehaviour
     PatrolEnemy[] enemies;
     bool chasing;
 
+    StringBuilder stringBuilder;
+
     private void Awake()
     {
+        stringBuilder= new StringBuilder();
         Instance = this;
     }
     // Start is called before the first frame update
@@ -30,7 +34,7 @@ public class EnemyManager : MonoBehaviour
         {
      
             chaseTimer = !CheckDetection() ? chaseTimer - Time.deltaTime : chaseMaxTime;
-            chaseTimerText.text = chaseTimer.ToString();
+            DisplayTime((int)chaseTimer);
             if (chaseTimer<=0)
             {
                 StopChase();
@@ -86,5 +90,12 @@ public class EnemyManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    void DisplayTime(int time)
+    {
+        stringBuilder.Length = 0;
+        stringBuilder.Append(time);
+        chaseTimerText.text = stringBuilder.ToString();
     }
 }

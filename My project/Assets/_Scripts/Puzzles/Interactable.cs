@@ -4,17 +4,19 @@ using UnityEngine;
 
 public enum ObjectClass
 { 
-    Red,Green,None
+    Alpha,Beta,None
 }
 public class Interactable : MonoBehaviour
 {
     public ObjectClass objectRequired;
     public ObjectClass objectHolded;
     public SpriteRenderer objectSprite;
+    public Wire wire;
 
     // Start is called before the first frame update
     void Start()
     {
+        wire=GetComponentInParent<Wire>();
         objectSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
         //SE ESTABLECE EL SPRITE AUTOMATICAMENTE AL INICIAR EL NIVEL DEPENDIENDO DE QUE SE INFORMO QUE CONTIENE EN EL INSPECTOR
@@ -24,9 +26,9 @@ public class Interactable : MonoBehaviour
                 objectSprite.sprite = null;
                 break;
 
-            case ObjectClass.Green:
+            case ObjectClass.Alpha:
                 break;
-            case ObjectClass.Red:
+            case ObjectClass.Beta:
                 break;
         }
     }
@@ -59,6 +61,7 @@ public class Interactable : MonoBehaviour
         objectHolded = objectInserted;
         objectSprite.sprite = objectsprite.sprite;
         objectsprite.sprite = null;
+        wire.CheckWire();
     }
 
     public bool HasCorrectObject()

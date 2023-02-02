@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Wire : MonoBehaviour
 {
     public Interactable[] interactables;
+    public UnityEvent onPuzzleResolutionEvent=new UnityEvent();
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +20,7 @@ public class Wire : MonoBehaviour
         {
             if (CheckWire())
             {
-                print("Todo ok");
+                onPuzzleResolutionEvent.Invoke();
 
             }
            
