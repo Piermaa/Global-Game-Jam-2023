@@ -19,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     float speed;
     private Interactable interactable;
     public static PlayerMovement Instance;
+
+    Vector2 move;
     // Start is called before the first frame update
 
     private void Awake()
@@ -34,20 +36,18 @@ public class PlayerMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
+    {   
+        move.x = Input.GetAxisRaw("Horizontal");
+        move.y = Input.GetAxisRaw("Vertical");
         
-
-        
-        if (hideState!=PlayerHideState.Hiding)
-        {
-            
-            rb.velocity = Vector2.zero+ new Vector2(x, y) * speed;
-        }
-    
-     
         ObjectCarrying();
+    }
+    private void FixedUpdate()
+    {
+       if (hideState != PlayerHideState.Hiding)
+        {
+            rb.MovePosition(rb.position+move*speed*Time.fixedDeltaTime);
+        }
     }
     private void ObjectCarrying()
     {
