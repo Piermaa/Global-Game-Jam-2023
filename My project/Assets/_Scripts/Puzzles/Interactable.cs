@@ -61,7 +61,11 @@ public class Interactable : MonoBehaviour
         objectHolded = objectInserted;
         objectSprite.sprite = objectsprite.sprite;
         objectsprite.sprite = null;
-        wire.CheckWire();
+        if (wire!=null)
+        {
+            wire.CheckWire();
+        }
+       
     }
 
     public bool HasCorrectObject()
