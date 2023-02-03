@@ -12,7 +12,7 @@ public class EnemyManager : MonoBehaviour
     public float chaseMaxTime=20;
     public static EnemyManager Instance;
     Transform player;
-    PatrolEnemy[] enemies;
+    public PatrolEnemy[] enemies;
     bool chasing;
 
     StringBuilder stringBuilder;

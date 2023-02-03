@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class Wire : MonoBehaviour
 {
     public Interactable[] interactables;
-    public UnityEvent onPuzzleResolutionEvent=new UnityEvent();
+    public UnityEvent onPuzzleResolutionEvent = new UnityEvent();
     // Start is called before the first frame update
     void Start()
     {
@@ -16,14 +16,15 @@ public class Wire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            if (CheckWire())
-            {
-                onPuzzleResolutionEvent.Invoke();
+       
+    }
 
-            }
-           
+    public void CheckSolution()
+    {
+        if (CheckWire())
+        {
+            onPuzzleResolutionEvent.Invoke();
+
         }
     }
 

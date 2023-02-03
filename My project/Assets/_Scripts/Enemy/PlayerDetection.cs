@@ -33,10 +33,11 @@ public class PlayerDetection : MonoBehaviour
         {
             if (NoWallsBetween(other.transform))
             {
+                playerInVision = true;
                 Debug.Log("PlayerSeen");
                 if (Vector3.Distance(enemy.transform.position, other.transform.position) <= fullDetectionDistance && playerMovement.hideState != PlayerMovement.PlayerHideState.Hiding)
                 {
-                    playerInVision = true;
+                  
                     //persecucion
                     
                         enemyManager.Chase();
@@ -80,10 +81,9 @@ public class PlayerDetection : MonoBehaviour
            Color.green, Time.deltaTime, true);
 
         RaycastHit2D raycastHit= Physics2D.Raycast(rayCastOrigin.position,direction);
-       
-        
-        
-        return raycastHit.collider.tag=="Player" && enemy.enemyState!=PatrolEnemy.EnemyState.Stunned;
+
+        print(raycastHit.collider.name);
+        return raycastHit.collider.name=="Player" && enemy.enemyState!=PatrolEnemy.EnemyState.Stunned;
             
         
     }

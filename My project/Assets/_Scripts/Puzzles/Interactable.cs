@@ -63,7 +63,7 @@ public class Interactable : MonoBehaviour
         objectsprite.sprite = null;
         if (wire!=null)
         {
-            wire.CheckWire();
+            wire.CheckSolution();
         }
        
     }

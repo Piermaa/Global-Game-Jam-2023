@@ -26,5 +26,6 @@ public class PlayerHealth : MonoBehaviour
         {
             onDeathEvent.Invoke();
         }
+        LevelManager.Instance.RespawnPlayer();
     }
 }

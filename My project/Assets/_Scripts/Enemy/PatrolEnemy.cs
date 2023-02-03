@@ -168,4 +168,13 @@ public class PatrolEnemy : MonoBehaviour
         
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && enemyState==EnemyState.Chase) 
+        {
+            collision.TryGetComponent<PlayerHealth>(out var player);
+            player.TakeDamage(1);
+        }
+    }
+
 }
