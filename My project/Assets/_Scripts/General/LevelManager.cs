@@ -46,7 +46,11 @@ public class LevelManager : MonoBehaviour
     public void RespawnPlayer()
     {
         player.transform.position= playerCheckPoint;
-        enemyManager.StopChase();
+        if (enemyManager != null)
+        {
+            enemyManager.StopChase();
+        }
+ 
     }
     public void PlayerDeath()
     {
