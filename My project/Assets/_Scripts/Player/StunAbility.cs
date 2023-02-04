@@ -7,6 +7,7 @@ public class StunAbility : MonoBehaviour
     int stunCharge = 1;
     bool canStun;
     public PatrolEnemy enemyToStun;
+    public AudioSource stunSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +27,7 @@ public class StunAbility : MonoBehaviour
             {
                 stunCharge--;
                 enemyToStun.Stun();
+                stunSound.Play();
             }
 
         }

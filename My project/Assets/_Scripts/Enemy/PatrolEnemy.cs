@@ -7,6 +7,7 @@ using UnityEngine.AI;
 
 public class PatrolEnemy : MonoBehaviour
 {
+    Animator animator;
     Transform detectionCone;
     public enum EnemyState
     {
@@ -42,6 +43,7 @@ public class PatrolEnemy : MonoBehaviour
         agent.updateUpAxis= false;
         playerDetection = GetComponentInChildren<PlayerDetection>();
         agent.SetDestination(waypoints[index].position);
+        animator = GetComponent<Animator>();
     }
 
    
@@ -128,6 +130,7 @@ public class PatrolEnemy : MonoBehaviour
     
     public void BeginPatrolling()
     {
+        print("BeginPatrol");
         enemyState = EnemyState.Patrol;
         //index = index < waypoints.Length ? index++ : 0;
         agent.SetDestination(waypoints[0].position);
@@ -135,7 +138,10 @@ public class PatrolEnemy : MonoBehaviour
 
     public void Stun()
     {
-        StartCoroutine(Stunned());
+     
+        agent.SetDestination(transform.position);
+        enemyState = EnemyState.Stunned;
+        animator.SetTrigger("Stun");
     }
     IEnumerator Stunned()
     {
