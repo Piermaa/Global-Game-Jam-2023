@@ -48473,7 +48473,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1135364530}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &684573112
 PrefabInstance:
@@ -48920,7 +48920,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1135364530}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &838822053
 GameObject:
@@ -49731,6 +49731,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  takingDamageMaterial: {fileID: 0}
 --- !u!61 &1060006824
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -50281,8 +50282,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 679573569}
   - {fileID: 814257109}
+  - {fileID: 679573569}
   - {fileID: 1585810657}
   - {fileID: 363881489}
   m_Father: {fileID: 131738506}
@@ -85290,11 +85291,11 @@ PrefabInstance:
     - target: {fileID: 7227574917492431170, guid: 2e93cb697a181b947bd90f0a47e36345, type: 3}
       propertyPath: waypoints.Array.data[0]
       value: 
-      objectReference: {fileID: 679573569}
+      objectReference: {fileID: 814257109}
     - target: {fileID: 7227574917492431170, guid: 2e93cb697a181b947bd90f0a47e36345, type: 3}
       propertyPath: waypoints.Array.data[1]
       value: 
-      objectReference: {fileID: 814257109}
+      objectReference: {fileID: 679573569}
     - target: {fileID: 7227574917492431170, guid: 2e93cb697a181b947bd90f0a47e36345, type: 3}
       propertyPath: waypoints.Array.data[2]
       value: 
