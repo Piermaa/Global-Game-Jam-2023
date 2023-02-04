@@ -10,13 +10,21 @@ public class LightEnemy : MonoBehaviour
     }
     public Angles angle;
     Animator animator;
-
+    public bool manuallyInit;
     private void Awake()
     {
         animator = GetComponent<Animator>();
     }
     // Start is called before the first frame update
     void Start()
+    {
+        if (!manuallyInit)
+        {
+            InitAnimation();
+        }
+    }
+
+    public void InitAnimation()
     {
         switch (angle)
         {
@@ -28,7 +36,6 @@ public class LightEnemy : MonoBehaviour
                 break;
         }
     }
-
     // Update is called once per frame
     void Update()
     {

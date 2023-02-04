@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public PlayerHideState hideState;
     public ObjectClass objectHolded;
     public GameObject grabbedObject;
-    SpriteRenderer grabbedSprite;
+    public SpriteRenderer grabbedSprite;
     Rigidbody2D rb;
     public float normalSpeed;
     public float holdingObjectSpeed;
@@ -70,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
                     interactable.InsertObject(objectHolded, grabbedSprite);
                     objectHolded = ObjectClass.None;
                     speed = normalSpeed;
+                   
                 }
             }
 

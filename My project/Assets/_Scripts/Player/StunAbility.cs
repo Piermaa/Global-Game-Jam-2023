@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class StunAbility : MonoBehaviour
 {
-    int stunCharge = 1;
-    bool canStun;
+    public bool stunCharged =true;
+    bool canStunBoss;
     public PatrolEnemy enemyToStun;
+    
     public AudioSource stunSound;
     // Start is called before the first frame update
     void Start()
     {
-        
+        stunCharged = true;
     }
 
     // Update is called once per frame
@@ -23,11 +24,19 @@ public class StunAbility : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (enemyToStun!=null)
+            if (enemyToStun!=null &&stunCharged)
             {
-                stunCharge--;
+                stunCharged = false;
                 enemyToStun.Stun();
                 stunSound.Play();
+            }
+            if (canStunBoss && stunCharged)
+
+            {
+                stunCharged = false;
+                //stunSound.Play();
+                BossFight.Instance.PhaseBegin();
+
             }
 
         }
@@ -42,6 +51,11 @@ public class StunAbility : MonoBehaviour
             {
                 enemyToStun = null;
             }
+            
+        }
+        if (collision.CompareTag("Boss"))
+        {
+            canStunBoss = true;
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -61,6 +75,10 @@ public class StunAbility : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             enemyToStun = null;
+        }
+        if (collision.CompareTag("Boss"))
+        {
+            canStunBoss = false;
         }
     }
 }

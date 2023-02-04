@@ -19,18 +19,29 @@ public class Interactable : MonoBehaviour
     {
         wire=GetComponentInParent<Wire>();
         objectSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        aux = objectHolded;
-        objectHolded = ObjectClass.None;
+        objectSprite.sprite = null;
         //SE ESTABLECE EL SPRITE AUTOMATICAMENTE AL INICIAR EL NIVEL DEPENDIENDO DE QUE SE INFORMO QUE CONTIENE EN EL INSPECTOR
-        if (!dontFillOnStart)
+        if (dontFillOnStart)
         {
-            Fill();
+            aux = objectHolded;
+            objectHolded = ObjectClass.None;
+         
         }
-       
+        switch (objectHolded)
+        {
+            case ObjectClass.None:
+                objectSprite.sprite = null;
+                break;
+            case ObjectClass.Alpha:
+                break;
+            case ObjectClass.Beta:
+                break;
+        }
+
     }
     public void Fill()
     {
-        objectHolded = aux;
+        objectHolded=aux;
         switch (objectHolded)
         {
             case ObjectClass.None:
@@ -70,11 +81,15 @@ public class Interactable : MonoBehaviour
         objectHolded = objectInserted;
         objectSprite.sprite = objectsprite.sprite;
         objectsprite.sprite = null;
+        print(gameObject.name);
         if (wire!=null)
         {
             wire.CheckSolution();
         }
-       
+        else if (BossFight.Instance != null && HasCorrectObject())
+        {
+            BossFight.Instance.TryPromotePhase();
+        }
     }
 
     public bool HasCorrectObject()
