@@ -10,29 +10,38 @@ public class Interactable : MonoBehaviour
 {
     public ObjectClass objectRequired;
     public ObjectClass objectHolded;
+     ObjectClass aux;
     public SpriteRenderer objectSprite;
     public Wire wire;
-
+    public bool dontFillOnStart;
     // Start is called before the first frame update
     void Start()
     {
         wire=GetComponentInParent<Wire>();
         objectSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
-
+        aux = objectHolded;
+        objectHolded = ObjectClass.None;
         //SE ESTABLECE EL SPRITE AUTOMATICAMENTE AL INICIAR EL NIVEL DEPENDIENDO DE QUE SE INFORMO QUE CONTIENE EN EL INSPECTOR
+        if (!dontFillOnStart)
+        {
+            Fill();
+        }
+       
+    }
+    public void Fill()
+    {
+        objectHolded = aux;
         switch (objectHolded)
         {
             case ObjectClass.None:
                 objectSprite.sprite = null;
                 break;
-
             case ObjectClass.Alpha:
                 break;
             case ObjectClass.Beta:
                 break;
         }
     }
-
 
 
     /// <summary>
