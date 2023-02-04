@@ -26,7 +26,7 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         player=FindObjectOfType<PlayerHealth>().transform;
-        enemies=FindObjectsOfType<PatrolEnemy>();
+   
     }
     private void Update()
     {
