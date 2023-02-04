@@ -65,7 +65,7 @@ public class Interactable : MonoBehaviour
         {
             wire.CheckSolution();
         }
-       
+      
     }
 
     public bool HasCorrectObject()
