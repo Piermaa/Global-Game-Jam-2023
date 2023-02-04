@@ -35,6 +35,7 @@ public class PlayerHealth : MonoBehaviour
         StartCoroutine(TakingDamage());
         if(healthPoints<=0)
         {
+            InteractableManager.Instance.LeftGrabbedObject();
             onDeathEvent.Invoke();
         }
         LevelManager.Instance.RespawnPlayer();
