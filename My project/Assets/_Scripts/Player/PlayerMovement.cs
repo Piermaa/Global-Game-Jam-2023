@@ -70,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
                     interactable.InsertObject(objectHolded, grabbedSprite);
                     objectHolded = ObjectClass.None;
                     speed = normalSpeed;
+                   
                 }
             }
 

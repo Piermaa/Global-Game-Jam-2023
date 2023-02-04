@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BossFight : MonoBehaviour
 {
+    public GameObject bossBarrier;
     [System.Serializable]
     public class Phase
     {
@@ -12,26 +13,68 @@ public class BossFight : MonoBehaviour
     }
     public List<Phase> phases=new List<Phase>();
     public int phaseIndex;
-
+    StunAbility playerStun;
     public List<LightEnemy> lights=new List<LightEnemy>();
-    public Interactable[] holders;
+    public Interactable[] sockets;
     LevelManager levelManager;
-
+    public static BossFight Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         levelManager = LevelManager.Instance;
+        StartCoroutine(SecondFrame());
+        playerStun = FindObjectOfType<StunAbility>();
     }
-
+    IEnumerator SecondFrame()
+    {
+        yield return new WaitForEndOfFrame();
+        PhaseBegin();
+      
+    }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            NextPhase();
+            PhaseBegin();
         }
     }
 
-    public void NextPhase()
+    public void TryPromotePhase()
+    {
+
+        switch (phaseIndex)
+        {
+            case 1:
+                if (CheckInserteds()==1)
+                {
+                    SetBossVulnerable();
+                }
+                break;
+            case 2:
+                if (CheckInserteds() == 3)
+                {
+                    SetBossVulnerable();
+                }
+                break;
+            case 3:
+                if (CheckInserteds() == 6)
+                {
+                    SetBossVulnerable();
+                }
+                break;
+        }
+    }
+
+    public void SetBossVulnerable()
+    {
+        bossBarrier.SetActive(false);
+    }
+
+    public void PhaseBegin()
     {
         foreach (var h in phases[phaseIndex].holdersToFill)
         {
@@ -43,16 +86,26 @@ public class BossFight : MonoBehaviour
             var le = l.GetComponent<LightEnemy>();
             lights.Add(le);
         }
+
         if (phaseIndex>0)
-        {
-           
             foreach (var a in lights)
-            {
                 a.InitAnimation();
-            }
-        }
-       
+
+        playerStun.stunCharged = true;
         phaseIndex++;
         levelManager.RespawnPlayer();
+    }
+
+    public int CheckInserteds()
+    {
+        int corrects=0;
+        foreach (var s in sockets)
+        {
+            if (s.HasCorrectObject())
+            {
+                corrects++;
+            }
+        }
+        return corrects;
     }
 }
