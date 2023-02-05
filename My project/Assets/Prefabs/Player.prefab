@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 8388279417667034701}
   - component: {fileID: 8388279417667034694}
   - component: {fileID: 8388279417667034691}
+  - component: {fileID: 2103091905192093870}
   - component: {fileID: 8388279417667034693}
   - component: {fileID: 8388279417667034703}
   - component: {fileID: 8388279417667034702}
@@ -164,7 +165,7 @@ SpriteRenderer:
   m_SortingLayerID: 558304065
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5952947bf62939c42b15f299f7824216, type: 3}
+  m_Sprite: {fileID: -305324004, guid: b69bbc880dfc1554c9e1ddf6027e4079, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -187,7 +188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d2380664592b344983fc43286db8d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stunCharged: 1
   enemyToStun: {fileID: 0}
+  stunSound: {fileID: 0}
 --- !u!114 &8388279417667034694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,8 +206,10 @@ MonoBehaviour:
   hideState: 0
   objectHolded: 2
   grabbedObject: {fileID: 8388279415940820858}
+  grabbedSprite: {fileID: 0}
   normalSpeed: 3
   holdingObjectSpeed: 2
+  grabbedInteractable: {fileID: 0}
 --- !u!114 &8388279417667034691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,6 +238,32 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  takingDamageMaterial: {fileID: 0}
+--- !u!114 &2103091905192093870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8388279417667034692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 126703cd1a7c8dc40bc4b0bc798d9ae6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerWalkDown:
+  - {fileID: -305324004, guid: b69bbc880dfc1554c9e1ddf6027e4079, type: 3}
+  - {fileID: 2043454518, guid: b69bbc880dfc1554c9e1ddf6027e4079, type: 3}
+  - {fileID: -1305341257, guid: b69bbc880dfc1554c9e1ddf6027e4079, type: 3}
+  - {fileID: -40749352, guid: b69bbc880dfc1554c9e1ddf6027e4079, type: 3}
+  - {fileID: -1760138750, guid: b69bbc880dfc1554c9e1ddf6027e4079, type: 3}
+  playerWalkUp: []
+  playerWalkLeft: []
+  playerWalkRight: []
+  animTimeThreshold: 0.15
+  sr: {fileID: 0}
+  state: 0
+  animTimer: 0
 --- !u!50 &8388279417667034693
 Rigidbody2D:
   serializedVersion: 4
