@@ -35,7 +35,7 @@ public class StunAbility : MonoBehaviour
             {
                 stunCharged = false;
                 //stunSound.Play();
-                BossFight.Instance.PhaseBegin();
+                BossFight.Instance.TriggerPhase();
 
             }
 

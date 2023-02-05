@@ -18,12 +18,18 @@ public class BossFight : MonoBehaviour
     public Interactable[] sockets;
     LevelManager levelManager;
     public static BossFight Instance;
+    public ParticleSystem dmgParticles;
+    public Material dmgMaterial;
+    Material material;
+    public SpriteRenderer bossSprite;
+    public SpriteRenderer shieldSprite;
     private void Awake()
     {
         Instance = this;
     }
     void Start()
     {
+        material = bossSprite.material;
         levelManager = LevelManager.Instance;
         StartCoroutine(SecondFrame());
         playerStun = FindObjectOfType<StunAbility>();
@@ -71,6 +77,20 @@ public class BossFight : MonoBehaviour
         bossBarrier.SetActive(false);
     }
 
+    public void TriggerPhase()
+    {
+        StartCoroutine(WaitingToBeginPhase());
+    }
+    IEnumerator WaitingToBeginPhase()
+    {
+        bossSprite.material =dmgMaterial;
+        dmgParticles.Play();
+        yield return new WaitForSeconds(0.4f);
+        bossSprite.material = material;
+
+        yield return new WaitForSeconds(1);
+        PhaseBegin();
+    }
     public void PhaseBegin()
     {
 

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Sprite hidingSprite;
+    Sprite emptyHidingSpotSprite;
+    public SpriteRenderer hidingSpot;
     Transform hidePosition;
     public enum PlayerHideState
     {
@@ -77,9 +80,11 @@ public class PlayerMovement : MonoBehaviour
                 hideState = PlayerHideState.Hiding;
                 EnemyManager.Instance.PlayerHid();
                 transform.position = hidePosition.position;
+                hidingSpot.sprite = hidingSprite;
             }
             else if (hideState == PlayerHideState.Hiding)
             {
+                hidingSpot.sprite = emptyHidingSpotSprite;
                 hideState = PlayerHideState.CanHide;
             }
 
@@ -104,6 +109,8 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case "HideSpot":
                 hidePosition = collision.transform;
+                hidingSpot = collision.GetComponent<SpriteRenderer>();
+                emptyHidingSpotSprite = hidingSpot.sprite;
                 hideState = PlayerHideState.CanHide;
                 break;
         }
@@ -118,6 +125,8 @@ public class PlayerMovement : MonoBehaviour
 
                 break;
             case "HideSpot":
+
+                hidingSpot = null;
                 hideState= PlayerHideState.Nothiding;
                 break;
         }
