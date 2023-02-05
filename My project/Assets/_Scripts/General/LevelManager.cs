@@ -35,11 +35,15 @@ public class LevelManager : MonoBehaviour
                 area.enemies = area.enemyParent.GetComponentsInChildren<PatrolEnemy>();
             }
 
-            
+        }
+        enemyManager = EnemyManager.Instance;
+        if (areas[0].enemyParent!=null)
+        {
+            enemyManager.enemies = areas[0].enemies;
         }
         player = PlayerMovement.Instance.gameObject;
         playerCheckPoint=player.transform.position;
-        enemyManager = EnemyManager.Instance;
+
     }
 
 
