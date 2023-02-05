@@ -10,7 +10,6 @@ public class Interactable : MonoBehaviour
 {
     public ObjectClass objectRequired;
     public ObjectClass objectHolded;
-    public ObjectClass objectLifted;
     ObjectClass aux;
     public SpriteRenderer objectSprite;
     public Wire wire;
@@ -21,7 +20,6 @@ public class Interactable : MonoBehaviour
         wire=GetComponentInParent<Wire>();
         objectSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
         objectSprite.sprite = null;
-        objectLifted = objectHolded;
 
         //SE ESTABLECE EL SPRITE AUTOMATICAMENTE AL INICIAR EL NIVEL DEPENDIENDO DE QUE SE INFORMO QUE CONTIENE EN EL INSPECTOR
         if (dontFillOnStart)
