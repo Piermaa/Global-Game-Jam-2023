@@ -2819,8 +2819,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 349, y: -188}
-  m_SizeDelta: {x: 472.76, y: 154.03003}
+  m_AnchoredPosition: {x: 349, y: -191}
+  m_SizeDelta: {x: 472.76, y: 144.59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1434263877
 MonoBehaviour:
@@ -3390,8 +3390,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 242, y: -113}
-  m_SizeDelta: {x: 859.5, y: 254.68}
+  m_AnchoredPosition: {x: 242, y: -148.89}
+  m_SizeDelta: {x: 859.5, y: 182.91}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1855693763
 MonoBehaviour:
@@ -3426,7 +3426,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Lisa Vera
+  m_Text: '(Courtesy of)
+
+    Coffe Bat'
 --- !u!222 &1855693764
 CanvasRenderer:
   m_ObjectHideFlags: 0
