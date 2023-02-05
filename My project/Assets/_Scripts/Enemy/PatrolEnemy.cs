@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -34,7 +35,21 @@ public class PatrolEnemy : MonoBehaviour
     private NavMeshAgent agent;
     private Vector3 investigationPosition = Vector3.zero;
     private Vector3 lastPos;
- 
+
+    //animation
+    public Sprite[] enemyWalkDown;
+    public Sprite[] enemyWalkUp;
+    public Sprite[] enemyWalkLeft;
+    public Sprite[] enemyWalkRight;
+
+    public float animTimeThreshold = 0.15f;
+
+    public SpriteRenderer sr;
+
+    public int state = 0;
+    public float animTimer;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,41 +66,70 @@ public class PatrolEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-            Vector3 dirToLookAt = agent.destination;
-            Vector3 diff = new Vector3(dirToLookAt.x, dirToLookAt.y) - transform.position;
 
-        if (diff.x > diff.y)
+        Vector3 dirToLookAt = agent.destination;
+        Vector3 diff = new Vector3(dirToLookAt.x, dirToLookAt.y) - transform.position;
+
+        if (Mathf.Abs(diff.x) > Mathf.Abs(diff.y))
         {
             if (diff.x > 0)
             {
-                //derecha enemyAnimation=
+                if (enemyWalkRight != null && enemyWalkRight.Length < 0)
+                {
+                    if (Time.time > animTimer)
+                    {
+                        sr.sprite = enemyWalkRight[state % enemyWalkRight.Length];
+                        state++;
+                        animTimer = Time.time + animTimeThreshold;
+                    }
+                }
             }
             else
             {
-
+                if (enemyWalkLeft != null && enemyWalkLeft.Length < 0)
+                {
+                    if (Time.time > animTimer)
+                    {
+                        sr.sprite = enemyWalkLeft[state % enemyWalkLeft.Length];
+                        state++;
+                        animTimer = Time.time + animTimeThreshold;
+                    }
+                }
             }
             //izq
 
         }
         else
-
-        if (diff.y > 0)
         {
-            //derecha
-        }
-        else
-        {
-            //izq
+            if (diff.y > 0)
+            {
+                if (enemyWalkUp != null && enemyWalkUp.Length > 0)
+                {
+                    if (Time.time > animTimer)
+                    {
+                        sr.sprite = enemyWalkUp[state % enemyWalkUp.Length];
+                        state++;
+                        animTimer = Time.time + animTimeThreshold;
+                    }
+                }
+            }
+            else
+            {
+                if (enemyWalkDown != null && enemyWalkDown.Length > 0)
+                {
+                    if (Time.time > animTimer)
+                    {
+                        sr.sprite = enemyWalkDown[state % enemyWalkDown.Length];
+                        state++;
+                        animTimer = Time.time + animTimeThreshold;
+                    }
+                }
+
+
+            }
         }
 
-        //if (Time.time > animTimer)
-        //{
-        //    sr.sprite = playerWalkUp[state % enemyAnimation.Length];
-        //    state++;
-        //    animTimer = Time.time + animTimeThreshold;
-        //}
-
+ 
         diff.Normalize();
 
             float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
@@ -103,7 +147,9 @@ public class PatrolEnemy : MonoBehaviour
                 {
                     index = index < waypoints.Length - 1 ? index + 1 : 0;
                     agent.SetDestination(waypoints[index].position);
-
+                    Vector3 dirToLookAt1 = agent.destination;
+                    Vector3 diff1 = new Vector3(dirToLookAt1.x, dirToLookAt1.y) - transform.position;
+                    Debug.Log(diff1);
                 }
                 detectionCone.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
                 //print("arrived");

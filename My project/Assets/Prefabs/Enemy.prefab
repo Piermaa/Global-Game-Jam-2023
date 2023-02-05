@@ -267,7 +267,7 @@ SpriteRenderer:
   m_SortingLayerID: 558304065
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: afc5186b776d87146aa4d12a3e6a1c92, type: 3}
+  m_Sprite: {fileID: 950460753, guid: 6491bdd4810153c4bbd7034f8a035dc0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -503,6 +503,18 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   enemyState: 0
+  enemyWalkDown:
+  - {fileID: 377526007, guid: 6491bdd4810153c4bbd7034f8a035dc0, type: 3}
+  - {fileID: 950460753, guid: 6491bdd4810153c4bbd7034f8a035dc0, type: 3}
+  enemyWalkUp:
+  - {fileID: -611943633, guid: 366a368a884d64b4ea00a4b1006e11d7, type: 3}
+  - {fileID: -1100385813, guid: 366a368a884d64b4ea00a4b1006e11d7, type: 3}
+  enemyWalkLeft: []
+  enemyWalkRight: []
+  animTimeThreshold: 0.15
+  sr: {fileID: 1030838908229269681}
+  state: 0
+  animTimer: 0
 --- !u!195 &1291000930
 NavMeshAgent:
   m_ObjectHideFlags: 0
