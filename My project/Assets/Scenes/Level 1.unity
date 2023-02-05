@@ -43564,7 +43564,7 @@ Transform:
   m_Children:
   - {fileID: 1926982008}
   m_Father: {fileID: 0}
-  m_RootOrder: 27
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &141704540
 GameObject:
@@ -44038,6 +44038,7 @@ MonoBehaviour:
   objectHolded: 2
   objectSprite: {fileID: 0}
   wire: {fileID: 0}
+  dontFillOnStart: 0
 --- !u!61 &340138217
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -44258,7 +44259,7 @@ GameObject:
   - component: {fileID: 403511249}
   - component: {fileID: 403511248}
   m_Layer: 0
-  m_Name: Interactable Object Alpha Holder
+  m_Name: Interactable Object Alpha Holder (Part3)
   m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44332,6 +44333,7 @@ MonoBehaviour:
   objectHolded: 0
   objectSprite: {fileID: 0}
   wire: {fileID: 0}
+  dontFillOnStart: 0
 --- !u!61 &403511250
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -44753,7 +44755,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 29
+  m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &548265796
 GameObject:
@@ -44926,6 +44928,7 @@ MonoBehaviour:
   objectHolded: 1
   objectSprite: {fileID: 0}
   wire: {fileID: 0}
+  dontFillOnStart: 0
 --- !u!61 &550091512
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -45102,6 +45105,7 @@ MonoBehaviour:
   objectHolded: 2
   objectSprite: {fileID: 0}
   wire: {fileID: 0}
+  dontFillOnStart: 0
 --- !u!61 &606549935
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -45340,7 +45344,7 @@ Transform:
   - {fileID: 50868004}
   - {fileID: 1423463516}
   m_Father: {fileID: 0}
-  m_RootOrder: 30
+  m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &814257108
 GameObject:
@@ -45372,6 +45376,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1135364530}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &859668057
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 859668059}
+  - component: {fileID: 859668058}
+  m_Layer: 0
+  m_Name: InteractableManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &859668058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859668057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f136ab7e8691d4a8347febb33a19aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactables:
+  - {fileID: 550091511}
+--- !u!4 &859668059
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859668057}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.6645756, y: -33.288414, z: -0.05333335}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &875938009
 GameObject:
@@ -45424,7 +45474,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &881274630
 GameObject:
@@ -45605,7 +45655,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &958748175
 GameObject:
@@ -45849,6 +45899,7 @@ MonoBehaviour:
   objectHolded: 1
   objectSprite: {fileID: 0}
   wire: {fileID: 0}
+  dontFillOnStart: 0
 --- !u!61 &987325474
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -46058,7 +46109,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 33
+  m_RootOrder: 34
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1087605231
 GameObject:
@@ -46186,7 +46237,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 31
+  m_RootOrder: 32
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1089757276
 GameObject:
@@ -46502,7 +46553,7 @@ Transform:
   - {fileID: 1829362489}
   - {fileID: 295322197}
   m_Father: {fileID: 0}
-  m_RootOrder: 28
+  m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1228039363
 GameObject:
@@ -46660,7 +46711,7 @@ RectTransform:
   m_Children:
   - {fileID: 1996434077}
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -46898,6 +46949,7 @@ MonoBehaviour:
   objectHolded: 2
   objectSprite: {fileID: 0}
   wire: {fileID: 0}
+  dontFillOnStart: 0
 --- !u!61 &1331088693
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -47050,6 +47102,7 @@ MonoBehaviour:
   objectHolded: 1
   objectSprite: {fileID: 0}
   wire: {fileID: 0}
+  dontFillOnStart: 0
 --- !u!61 &1364144574
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -47195,6 +47248,7 @@ MonoBehaviour:
   objectHolded: 2
   objectSprite: {fileID: 0}
   wire: {fileID: 0}
+  dontFillOnStart: 0
 --- !u!61 &1389789121
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -75551,7 +75605,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 32
+  m_RootOrder: 33
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1579695930
 GameObject:
@@ -75619,7 +75673,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1585810656
 GameObject:
@@ -76343,7 +76397,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 36
+  m_RootOrder: 37
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1916452018
 GameObject:
@@ -76547,7 +76601,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 34
+  m_RootOrder: 35
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2006796918
 BoxCollider2D:
@@ -76617,7 +76671,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2029768312
 MonoBehaviour:
@@ -76708,7 +76762,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 35
+  m_RootOrder: 36
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2050966049
 PrefabInstance:

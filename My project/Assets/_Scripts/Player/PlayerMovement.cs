@@ -66,10 +66,8 @@ public class PlayerMovement : MonoBehaviour
                 //SI EL JUGADOR SI TIENE UN ITEM Y EL INTERACTABLE NO CONTIENE NINGUNO
                 else if (interactable.objectHolded == ObjectClass.None && !(objectHolded == ObjectClass.None))
                 {
-                    grabbedObject.SetActive(false);
                     interactable.InsertObject(objectHolded, grabbedSprite);
-                    objectHolded = ObjectClass.None;
-                    speed = normalSpeed;
+                    setNormalValuesAfterDropItem();
                    
                 }
             }
@@ -84,11 +82,17 @@ public class PlayerMovement : MonoBehaviour
             {
                 hideState = PlayerHideState.CanHide;
             }
-           
-              
+
         }
-   
     }
+
+    public void setNormalValuesAfterDropItem()
+    {
+        grabbedObject.SetActive(false);
+        objectHolded = ObjectClass.None;
+        speed = normalSpeed;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         switch(collision.tag)
@@ -114,9 +118,7 @@ public class PlayerMovement : MonoBehaviour
             case "HideSpot":
                 hideState= PlayerHideState.Nothiding;
                 break;
-
         }
-    
     }
 
 }

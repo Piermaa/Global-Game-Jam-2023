@@ -111,7 +111,7 @@ public class PatrolEnemy : MonoBehaviour
     /// <param name="positionToInvestigate"></param>
     public void Investigate(Vector3 positionToInvestigate)
     {
-        if (enemyState==EnemyState.Patrol|| enemyState == EnemyState.Waiting)
+        if (enemyState==EnemyState.Patrol || enemyState == EnemyState.Waiting)
         {
             enemyState = EnemyState.Investigate;
             investigationPosition = positionToInvestigate;

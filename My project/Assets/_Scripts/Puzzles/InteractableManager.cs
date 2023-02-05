@@ -4,10 +4,11 @@ using System.Text;
 using UnityEngine;
 
 public class InteractableManager : MonoBehaviour
+
 {
     public static InteractableManager Instance;
-    public Interactable[] intercatables;
-    public PlayerMovement playerMovement;
+    public Interactable[] interactables;
+    PlayerMovement playerMovement;
 
     void Start()
     {
@@ -21,13 +22,15 @@ public class InteractableManager : MonoBehaviour
 
 
     public void LeftGrabbedObject()
-    {   if(playerMovement.objectHolded.Equals(ObjectClass.Alpha) || playerMovement.objectHolded.Equals(ObjectClass.Beta))
+    {   if(!playerMovement.objectHolded.Equals(ObjectClass.None))
         {
-            foreach (var e in intercatables)
+            Debug.Log("has element");
+            foreach (var e in interactables)
             {
-                if (e.objectRequired.Equals(ObjectClass.None) && e.objectHolded.Equals(ObjectClass.None))
+                if (e.objectRequired.Equals(ObjectClass.None) && e.objectHolded.Equals(ObjectClass.None) && e.GetObjectLifted().Equals(playerMovement.objectHolded))
                 {
                     e.InsertObject(playerMovement.objectHolded, playerMovement.grabbedSprite);
+                    playerMovement.setNormalValuesAfterDropItem();
                 }
             }
         }

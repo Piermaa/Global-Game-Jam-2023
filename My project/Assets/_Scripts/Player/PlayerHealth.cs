@@ -29,15 +29,17 @@ public class PlayerHealth : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         sprite.material=baseMaterial;
     }
+
     public void TakeDamage(int damage)
     {
         healthPoints -= damage;
         StartCoroutine(TakingDamage());
         if(healthPoints<=0)
         {
-            InteractableManager.Instance.LeftGrabbedObject();
             onDeathEvent.Invoke();
         }
+        Debug.Log("Player damaged!");
+        InteractableManager.Instance.LeftGrabbedObject();
         LevelManager.Instance.RespawnPlayer();
     }
 }
