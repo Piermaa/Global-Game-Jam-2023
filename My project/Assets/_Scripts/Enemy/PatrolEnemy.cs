@@ -7,6 +7,7 @@ using UnityEngine.AI;
 
 public class PatrolEnemy : MonoBehaviour
 {
+
     Animator animator;
     Transform detectionCone;
     public enum EnemyState
@@ -53,7 +54,39 @@ public class PatrolEnemy : MonoBehaviour
         
             Vector3 dirToLookAt = agent.destination;
             Vector3 diff = new Vector3(dirToLookAt.x, dirToLookAt.y) - transform.position;
-            diff.Normalize();
+
+        if (diff.x > diff.y)
+        {
+            if (diff.x > 0)
+            {
+                //derecha enemyAnimation=
+            }
+            else
+            {
+
+            }
+            //izq
+
+        }
+        else
+
+        if (diff.y > 0)
+        {
+            //derecha
+        }
+        else
+        {
+            //izq
+        }
+
+        //if (Time.time > animTimer)
+        //{
+        //    sr.sprite = playerWalkUp[state % enemyAnimation.Length];
+        //    state++;
+        //    animTimer = Time.time + animTimeThreshold;
+        //}
+
+        diff.Normalize();
 
             float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
             
