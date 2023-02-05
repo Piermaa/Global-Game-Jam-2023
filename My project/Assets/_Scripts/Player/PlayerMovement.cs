@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     public float holdingObjectSpeed;
     float speed;
     private Interactable interactable;
+    public Interactable grabbedInteractable;
     public static PlayerMovement Instance;
 
     Vector2 move;
@@ -62,13 +63,12 @@ public class PlayerMovement : MonoBehaviour
                     grabbedObject.SetActive(true);
                     objectHolded = interactable.GrabObject(grabbedSprite);
                     speed = holdingObjectSpeed;
+                    grabbedInteractable = interactable;
                 }
                 //SI EL JUGADOR SI TIENE UN ITEM Y EL INTERACTABLE NO CONTIENE NINGUNO
                 else if (interactable.objectHolded == ObjectClass.None && !(objectHolded == ObjectClass.None))
                 {
-                    interactable.InsertObject(objectHolded, grabbedSprite);
-                    setNormalValuesAfterDropItem();
-                   
+                    PlayerInsertsObjectGrabbed(interactable);
                 }
             }
 
@@ -86,11 +86,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void setNormalValuesAfterDropItem()
+    private void PlayerInsertsObjectGrabbed(Interactable interactable)
     {
+        interactable.InsertObject(objectHolded, grabbedSprite);
         grabbedObject.SetActive(false);
         objectHolded = ObjectClass.None;
         speed = normalSpeed;
+        grabbedInteractable = null;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -121,4 +123,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void DropItemWhenDamaged()
+    {
+        if(grabbedInteractable!= null)
+        {
+            PlayerInsertsObjectGrabbed(grabbedInteractable);   
+
+        }
+    }
 }

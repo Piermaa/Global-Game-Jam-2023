@@ -7,15 +7,17 @@ public class PlayerHealth : MonoBehaviour
 {
     public int healthPoints;
     public UnityEvent onDeathEvent=new UnityEvent();
-
     private SpriteRenderer sprite;
     Material baseMaterial;
     public Material takingDamageMaterial;
+    private PlayerMovement playerMovement;
+
     // Start is called before the first frame update
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
         baseMaterial = sprite.material;
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
@@ -39,7 +41,7 @@ public class PlayerHealth : MonoBehaviour
             onDeathEvent.Invoke();
         }
         Debug.Log("Player damaged!");
-        InteractableManager.Instance.LeftGrabbedObject();
+        playerMovement.DropItemWhenDamaged();
         LevelManager.Instance.RespawnPlayer();
     }
 }

@@ -44036,6 +44036,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectRequired: 0
   objectHolded: 2
+  objectLifted: 0
   objectSprite: {fileID: 0}
   wire: {fileID: 0}
   dontFillOnStart: 0
@@ -44331,6 +44332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectRequired: 2
   objectHolded: 0
+  objectLifted: 0
   objectSprite: {fileID: 0}
   wire: {fileID: 0}
   dontFillOnStart: 0
@@ -44926,6 +44928,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectRequired: 2
   objectHolded: 1
+  objectLifted: 1
   objectSprite: {fileID: 0}
   wire: {fileID: 0}
   dontFillOnStart: 0
@@ -45103,6 +45106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectRequired: 1
   objectHolded: 2
+  objectLifted: 0
   objectSprite: {fileID: 0}
   wire: {fileID: 0}
   dontFillOnStart: 0
@@ -45408,6 +45412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactables:
   - {fileID: 550091511}
+  - {fileID: 403511249}
 --- !u!4 &859668059
 Transform:
   m_ObjectHideFlags: 0
@@ -45897,6 +45902,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectRequired: 2
   objectHolded: 1
+  objectLifted: 0
   objectSprite: {fileID: 0}
   wire: {fileID: 0}
   dontFillOnStart: 0
@@ -46947,6 +46953,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectRequired: 1
   objectHolded: 2
+  objectLifted: 0
   objectSprite: {fileID: 0}
   wire: {fileID: 0}
   dontFillOnStart: 0
@@ -47028,7 +47035,7 @@ GameObject:
   - component: {fileID: 1364144573}
   - component: {fileID: 1364144572}
   m_Layer: 0
-  m_Name: Interactable Object Beta Holder
+  m_Name: Interactable Object Beta Holder(Part 3)
   m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47100,6 +47107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectRequired: 2
   objectHolded: 1
+  objectLifted: 1
   objectSprite: {fileID: 0}
   wire: {fileID: 0}
   dontFillOnStart: 0
@@ -47246,6 +47254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectRequired: 1
   objectHolded: 2
+  objectLifted: 0
   objectSprite: {fileID: 0}
   wire: {fileID: 0}
   dontFillOnStart: 0
@@ -77205,6 +77214,10 @@ PrefabInstance:
     - target: {fileID: 8388279417667034688, guid: dfeef54487ec8e04c97594a4cc96d1b9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8388279417667034691, guid: dfeef54487ec8e04c97594a4cc96d1b9, type: 3}
+      propertyPath: healthPoints
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8388279417667034691, guid: dfeef54487ec8e04c97594a4cc96d1b9, type: 3}
       propertyPath: takingDamageMaterial

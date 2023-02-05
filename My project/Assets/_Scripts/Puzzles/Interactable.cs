@@ -10,7 +10,8 @@ public class Interactable : MonoBehaviour
 {
     public ObjectClass objectRequired;
     public ObjectClass objectHolded;
-     ObjectClass aux;
+    public ObjectClass objectLifted;
+    ObjectClass aux;
     public SpriteRenderer objectSprite;
     public Wire wire;
     public bool dontFillOnStart;
@@ -20,12 +21,13 @@ public class Interactable : MonoBehaviour
         wire=GetComponentInParent<Wire>();
         objectSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
         objectSprite.sprite = null;
+        objectLifted = objectHolded;
+
         //SE ESTABLECE EL SPRITE AUTOMATICAMENTE AL INICIAR EL NIVEL DEPENDIENDO DE QUE SE INFORMO QUE CONTIENE EN EL INSPECTOR
         if (dontFillOnStart)
         {
             aux = objectHolded;
             objectHolded = ObjectClass.None;
-         
         }
         switch (objectHolded)
         {
@@ -37,8 +39,8 @@ public class Interactable : MonoBehaviour
             case ObjectClass.Beta:
                 break;
         }
-
     }
+
     public void Fill()
     {
         objectHolded=aux;
@@ -53,7 +55,6 @@ public class Interactable : MonoBehaviour
                 break;
         }
     }
-
 
     /// <summary>
     /// Se llama cuando el jugador agarra el objeto en el slot
@@ -78,10 +79,7 @@ public class Interactable : MonoBehaviour
     /// <param name="objectsprite"></param>
     public void InsertObject(ObjectClass objectInserted,SpriteRenderer objectsprite)
     {
-        objectHolded = objectInserted;
-        objectSprite.sprite = objectsprite.sprite;
-        objectsprite.sprite = null;
-        print(gameObject.name);
+        SetInsertObjectValues(objectInserted, objectsprite);
         if (wire!=null)
         {
             wire.CheckSolution();
@@ -90,6 +88,14 @@ public class Interactable : MonoBehaviour
         {
             BossFight.Instance.TryPromotePhase();
         }
+    }
+
+    public void SetInsertObjectValues(ObjectClass objectInserted, SpriteRenderer objectsprite)
+    {
+        objectHolded = objectInserted;
+        objectSprite.sprite = objectsprite.sprite;
+        objectsprite.sprite = null;
+        print(gameObject.name);
     }
 
     public bool HasCorrectObject()
