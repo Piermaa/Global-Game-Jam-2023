@@ -17,14 +17,26 @@ public class LevelManager : MonoBehaviour
     public List<Area> areas = new List<Area>();
     GameObject player;
     Vector3 playerCheckPoint;
+    public  Sprite alphaSprite;
+    public  Sprite betaSprite;
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
         }
+
+        var inters=FindObjectsOfType<Interactable>();
+        foreach (var i in inters)
+        {
+            i.alphaSprite = alphaSprite;
+            i.betaSprite = betaSprite;
+        }
     }
-    
+ 
+
+   
+
     private void Start()
     {
         foreach (var area in areas)
@@ -37,7 +49,7 @@ public class LevelManager : MonoBehaviour
 
         }
         enemyManager = EnemyManager.Instance;
-        if (areas[0].enemyParent!=null)
+        if (enemyManager!=null&& areas[0].enemyParent!=null)
         {
             enemyManager.enemies = areas[0].enemies;
         }

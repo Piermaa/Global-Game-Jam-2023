@@ -14,6 +14,8 @@ public class Interactable : MonoBehaviour
     public SpriteRenderer objectSprite;
     public Wire wire;
     public bool dontFillOnStart;
+    public Sprite alphaSprite;
+    public Sprite betaSprite;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,8 +35,10 @@ public class Interactable : MonoBehaviour
                 objectSprite.sprite = null;
                 break;
             case ObjectClass.Alpha:
+                objectSprite.sprite = alphaSprite;
                 break;
             case ObjectClass.Beta:
+                objectSprite.sprite = betaSprite;
                 break;
         }
     }
@@ -48,8 +52,10 @@ public class Interactable : MonoBehaviour
                 objectSprite.sprite = null;
                 break;
             case ObjectClass.Alpha:
+                objectSprite.sprite = alphaSprite;
                 break;
             case ObjectClass.Beta:
+                objectSprite.sprite = betaSprite;
                 break;
         }
     }

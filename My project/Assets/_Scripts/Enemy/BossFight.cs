@@ -76,6 +76,7 @@ public class BossFight : MonoBehaviour
 
     public void PhaseBegin()
     {
+        bossBarrier.SetActive(true);
         foreach (var h in phases[phaseIndex].holdersToFill)
         {
             h.Fill();
