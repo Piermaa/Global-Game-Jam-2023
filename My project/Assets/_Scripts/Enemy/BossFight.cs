@@ -37,10 +37,7 @@ public class BossFight : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            PhaseBegin();
-        }
+
     }
 
     public void TryPromotePhase()
@@ -76,6 +73,12 @@ public class BossFight : MonoBehaviour
 
     public void PhaseBegin()
     {
+
+        if (phaseIndex==3)
+        {
+            Time.timeScale = 0;
+            levelManager.NextLevel();
+        }
         bossBarrier.SetActive(true);
         foreach (var h in phases[phaseIndex].holdersToFill)
         {
@@ -91,6 +94,7 @@ public class BossFight : MonoBehaviour
         if (phaseIndex>0)
             foreach (var a in lights)
                 a.InitAnimation();
+
 
         playerStun.stunCharged = true;
         phaseIndex++;
