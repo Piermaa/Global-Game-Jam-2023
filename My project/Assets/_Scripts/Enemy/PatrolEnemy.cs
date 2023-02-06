@@ -43,7 +43,7 @@ public class PatrolEnemy : MonoBehaviour
     public Sprite[] enemyWalkLeft;
     public Sprite[] enemyWalkRight;
 
-    public float animTimeThreshold = 0.15f;
+    public float animTimeThreshold = 0.25f;
 
     public SpriteRenderer sr;
 
@@ -72,64 +72,31 @@ public class PatrolEnemy : MonoBehaviour
         Vector3 dirToLookAt = agent.destination;
         Vector3 diff = new Vector3(dirToLookAt.x, dirToLookAt.y) - transform.position;
 
-        if (Mathf.Abs(diff.x) > Mathf.Abs(diff.y))
+        if (diff.y > diff.x && diff.y > 0)
         {
-            if (diff.x > 0)
+            if (enemyWalkUp != null && enemyWalkUp.Length > 0)
             {
-                if (enemyWalkRight != null && enemyWalkRight.Length < 0)
+                if (Time.time > animTimer)
                 {
-                    if (Time.time > animTimer)
-                    {
-                        sr.sprite = enemyWalkRight[state % enemyWalkRight.Length];
-                        state++;
-                        animTimer = Time.time + animTimeThreshold;
-                    }
+                    sr.sprite = enemyWalkUp[state % enemyWalkUp.Length];
+                    state++;
+                    animTimer = Time.time + animTimeThreshold;
                 }
-            }
-            else
-            {
-                if (enemyWalkLeft != null && enemyWalkLeft.Length < 0)
-                {
-                    if (Time.time > animTimer)
-                    {
-                        sr.sprite = enemyWalkLeft[state % enemyWalkLeft.Length];
-                        state++;
-                        animTimer = Time.time + animTimeThreshold;
-                    }
-                }
-            }
-            //izq
-
-        }
-        else
-        {
-            if (diff.y > 0)
-            {
-                if (enemyWalkUp != null && enemyWalkUp.Length > 0)
-                {
-                    if (Time.time > animTimer)
-                    {
-                        sr.sprite = enemyWalkUp[state % enemyWalkUp.Length];
-                        state++;
-                        animTimer = Time.time + animTimeThreshold;
-                    }
-                }
-            }
-            else
-            {
-                if (enemyWalkDown != null && enemyWalkDown.Length > 0)
-                {
-                    if (Time.time > animTimer)
-                    {
-                        sr.sprite = enemyWalkDown[state % enemyWalkDown.Length];
-                        state++;
-                        animTimer = Time.time + animTimeThreshold;
-                    }
-                }
-
-
             }
         }
+        else {
+            if (enemyWalkDown != null && enemyWalkDown.Length > 0)
+            {
+                if (Time.time > animTimer)
+                {
+                    sr.sprite = enemyWalkDown[state % enemyWalkDown.Length];
+                    state++;
+                    animTimer = Time.time + animTimeThreshold;
+                }
+            }
+        }
+        
+           
 
  
         diff.Normalize();

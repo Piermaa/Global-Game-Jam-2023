@@ -9,7 +9,7 @@ public class DoorAnimation : MonoBehaviour
     bool isClosed = true;
     bool mustClose;
     public Sprite[] openDoorAnimation;
-    public float animTimeThreshold = 0.15f;
+     float animTimeThreshold = 0.15f;
     public SpriteRenderer sr;
     public int state = 0;
     public int reverseState = 5;
