@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     public int healthPoints;
@@ -11,6 +11,9 @@ public class PlayerHealth : MonoBehaviour
     Material baseMaterial;
     public Material takingDamageMaterial;
     private PlayerMovement playerMovement;
+
+    [SerializeField] Sprite[] healthSprites;
+    [SerializeField] SpriteRenderer healthSpriteRenderer;
 
     // Start is called before the first frame update
     void Start()
