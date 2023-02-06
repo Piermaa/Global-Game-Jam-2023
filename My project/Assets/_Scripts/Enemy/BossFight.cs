@@ -96,7 +96,7 @@ public class BossFight : MonoBehaviour
 
         if (phaseIndex==3)
         {
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
             levelManager.NextLevel();
             return;
         }
