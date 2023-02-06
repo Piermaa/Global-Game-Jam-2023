@@ -14,8 +14,8 @@ public class MenuManager : MonoBehaviour
         var animator=creditsCanvas.GetComponentInChildren<Animator>();
         if (animator != null)
         {
-            animator.SetTrigger("begin");
-            print("began");
+            
+       
         }
         else 
         {
@@ -56,5 +56,13 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
-    
+    public void delayexit()
+    {
+        StartCoroutine(waitToexit());
+    }
+    IEnumerator waitToexit()
+    {
+        yield return new WaitForSeconds(1.16f);
+        Application.Quit();
+    }
 }
