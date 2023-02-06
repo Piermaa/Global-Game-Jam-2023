@@ -76,18 +76,20 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            if (hideState == PlayerHideState.CanHide)
+            switch (hideState)
             {
-                hideState = PlayerHideState.Hiding;
-                EnemyManager.Instance.PlayerHid();
-                transform.position = hidePosition.position;
-                hidingSpot.sprite = hidingSprite;
+                case PlayerHideState.CanHide:
+                    hideState = PlayerHideState.Hiding;
+                    EnemyManager.Instance.PlayerHid();
+                    transform.position = hidePosition.position;
+                    hidingSpot.sprite = hidingSprite;
+                    break;
+                case PlayerHideState.Hiding:
+                    hidingSpot.sprite = emptyHidingSpotSprite;
+                    hideState = PlayerHideState.CanHide;
+                    break;
             }
-            else if (hideState == PlayerHideState.Hiding)
-            {
-                hidingSpot.sprite = emptyHidingSpotSprite;
-                hideState = PlayerHideState.CanHide;
-            }
+       
 
         }
     }
@@ -116,6 +118,25 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
 
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        switch (collision.tag)
+        {
+            case "Pickup":
+                collision.TryGetComponent<Interactable>(out interactable);
+                break;
+            case "HideSpot":
+                hidePosition = collision.transform;
+                hidingSpot = collision.GetComponent<SpriteRenderer>();
+   
+                if (hideState != PlayerHideState.Hiding)
+                {
+                    hideState = PlayerHideState.CanHide;
+                }
+
+                break;
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {

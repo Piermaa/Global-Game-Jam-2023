@@ -79,7 +79,7 @@ public class PlayerAnim : MonoBehaviour
                     case KeyCode.LeftArrow:
                     case KeyCode.A:
                         objectHoldedSprite.sortingOrder = -1;
-                        actualAnim = move.objectHolded == ObjectClass.None ? playerWalkLeft:playerWalkLeft;
+                        actualAnim = move.objectHolded == ObjectClass.None ? playerWalkLeft:playerWalkLeftH;
                         holdedObject.position = left.position;
 
                         break;

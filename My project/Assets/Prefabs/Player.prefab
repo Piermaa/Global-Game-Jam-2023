@@ -754,7 +754,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1209,6 +1209,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   takingDamageMaterial: {fileID: 2100000, guid: 8484b9232dceb7a4ea6b089c63411234, type: 2}
+  takingDamageSound: {fileID: 1902305348}
   healthSprites:
   - {fileID: -2079511431, guid: 070b53a1f43bf5444ab8e35192e8cb76, type: 3}
   - {fileID: 900006651, guid: 070b53a1f43bf5444ab8e35192e8cb76, type: 3}

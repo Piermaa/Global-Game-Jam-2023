@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BossFight : MonoBehaviour
 {
+    AudioSource audio;
+    public Sprite[] shieldSprites;
     public GameObject bossBarrier;
     [System.Serializable]
     public class Phase
@@ -23,12 +25,15 @@ public class BossFight : MonoBehaviour
     Material material;
     public SpriteRenderer bossSprite;
     public SpriteRenderer shieldSprite;
+    Animator animator;
     private void Awake()
     {
         Instance = this;
     }
     void Start()
     {
+        audio = GetComponent<AudioSource>();
+        animator = GetComponentInChildren<Animator>();
         material = bossSprite.material;
         levelManager = LevelManager.Instance;
         StartCoroutine(SecondFrame());
@@ -48,25 +53,28 @@ public class BossFight : MonoBehaviour
 
     public void TryPromotePhase()
     {
-
+        
         switch (phaseIndex)
         {
             case 1:
                 if (CheckInserteds()==1)
                 {
                     SetBossVulnerable();
+                   
                 }
                 break;
             case 2:
                 if (CheckInserteds() == 3)
                 {
                     SetBossVulnerable();
+                 
                 }
                 break;
             case 3:
                 if (CheckInserteds() == 6)
                 {
                     SetBossVulnerable();
+                   
                 }
                 break;
         }
@@ -79,6 +87,8 @@ public class BossFight : MonoBehaviour
 
     public void TriggerPhase()
     {
+        audio.Play();
+        animator.SetTrigger("Death");
         StartCoroutine(WaitingToBeginPhase());
     }
     IEnumerator WaitingToBeginPhase()
@@ -91,13 +101,19 @@ public class BossFight : MonoBehaviour
         yield return new WaitForSeconds(1);
         PhaseBegin();
     }
+    IEnumerator Waiting()
+    {
+        animator.SetTrigger("Death");
+        yield return new WaitForSeconds(6);
+        levelManager.NextLevel();
+    }
     public void PhaseBegin()
     {
-
+        
         if (phaseIndex==3)
         {
-            //Time.timeScale = 0;
-            levelManager.NextLevel();
+            StartCoroutine(Waiting());
+           
             return;
         }
         bossBarrier.SetActive(true);
@@ -112,10 +128,15 @@ public class BossFight : MonoBehaviour
             lights.Add(le);
         }
 
-        if (phaseIndex>0)
+        if (phaseIndex > 0)
+        {
             foreach (var a in lights)
+            {
                 a.InitAnimation();
+                a.Slow();
+            }
 
+        }
 
         playerStun.stunCharged = true;
         phaseIndex++;

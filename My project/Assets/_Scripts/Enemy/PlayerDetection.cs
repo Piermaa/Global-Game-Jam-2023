@@ -31,11 +31,11 @@ public class PlayerDetection : MonoBehaviour
        
         if (other.CompareTag("Player"))
         {
-            if (NoWallsBetween(other.transform))
+            if (NoWallsBetween(other.transform)&& playerMovement.hideState != PlayerMovement.PlayerHideState.Hiding)
             {
                 playerInVision = true;
                 Debug.Log("PlayerSeen");
-                if (Vector3.Distance(enemy.transform.position, other.transform.position) <= fullDetectionDistance && playerMovement.hideState != PlayerMovement.PlayerHideState.Hiding)
+                if (Vector3.Distance(enemy.transform.position, other.transform.position) <= fullDetectionDistance  )
                 {
                   
                     //persecucion

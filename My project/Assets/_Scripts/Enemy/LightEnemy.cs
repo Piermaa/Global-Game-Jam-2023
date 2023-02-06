@@ -36,6 +36,10 @@ public class LightEnemy : MonoBehaviour
                 break;
         }
     }
+    public void Slow()
+    {
+        animator.SetFloat("SpeedMult",0.6389f);
+    }
     // Update is called once per frame
     void Update()
     {

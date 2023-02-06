@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.PlasticSCM.Editor.WebApi;
+
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -18,10 +18,11 @@ public class DoorAnimation : MonoBehaviour
     public Sprite closedSprite;
     public Collider2D collider;
 
-
+    AudioSource audio;
     // Start is called before the first frame update
     void Start()
     {
+        audio = GetComponent<AudioSource>();
         collider = GetComponent<Collider2D>();
     }
 
@@ -57,6 +58,7 @@ public class DoorAnimation : MonoBehaviour
     public void OpenDoor()
     {
         isClosed = false;
+        audio.Play();
     }
        
     public void CloseDoor()
