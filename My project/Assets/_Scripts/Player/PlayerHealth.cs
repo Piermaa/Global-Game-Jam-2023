@@ -12,7 +12,7 @@ public class PlayerHealth : MonoBehaviour
     Material baseMaterial;
     public Material takingDamageMaterial;
     private PlayerMovement playerMovement;
-
+    public AudioSource takingDamageSound;
     [SerializeField] Sprite[] healthSprites;
     [SerializeField] Image healthSpriteRenderer;
 
@@ -40,9 +40,10 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        takingDamageSound.Play();
         dmgParticles.Play();
         healthPoints -= damage;
-
+        
         StartCoroutine(TakingDamage());
         if (healthPoints <= 0)
         {
