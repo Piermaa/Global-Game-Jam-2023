@@ -11,11 +11,25 @@ public class MenuManager : MonoBehaviour
 
     private void Awake()
     {
-        creditsCanvas.SetActive(false);
+        var animator=creditsCanvas.GetComponentInChildren<Animator>();
+        if (animator != null)
+        {
+            animator.SetTrigger("begin");
+            print("began");
+        }
+        else 
+        {
+            creditsCanvas.SetActive(false);
+        }
+     
         howToPlayCanvas.SetActive(false);
 
     }
-
+    private void Start()
+    {
+       
+         
+    }
     public void HowToPlay()
     {
         howToPlayCanvas.SetActive(true);

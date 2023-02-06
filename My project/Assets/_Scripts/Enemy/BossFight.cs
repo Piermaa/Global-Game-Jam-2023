@@ -98,6 +98,7 @@ public class BossFight : MonoBehaviour
         {
             Time.timeScale = 0;
             levelManager.NextLevel();
+            return;
         }
         bossBarrier.SetActive(true);
         foreach (var h in phases[phaseIndex].holdersToFill)

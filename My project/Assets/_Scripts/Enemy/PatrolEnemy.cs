@@ -149,9 +149,7 @@ public class PatrolEnemy : MonoBehaviour
                 {
                     index = index < waypoints.Length - 1 ? index + 1 : 0;
                     agent.SetDestination(waypoints[index].position);
-                    Vector3 dirToLookAt1 = agent.destination;
-                    Vector3 diff1 = new Vector3(dirToLookAt1.x, dirToLookAt1.y) - transform.position;
-                    Debug.Log(diff1);
+                  
                 }
                 detectionCone.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
                 //print("arrived");

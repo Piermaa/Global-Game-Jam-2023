@@ -60,7 +60,7 @@ public class PlayerAnim : MonoBehaviour
             //if (k != key || key == KeyCode.None)
             {
               
-                switch (key)
+                switch (k)
                 {
                     case KeyCode.DownArrow:
                     case KeyCode.S:

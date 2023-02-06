@@ -42,11 +42,14 @@ public class PlayerHealth : MonoBehaviour
     {
         dmgParticles.Play();
         healthPoints -= damage;
-        healthSpriteRenderer.sprite = healthSprites[3-healthPoints];
+
         StartCoroutine(TakingDamage());
-        if(healthPoints<=0)
+        if (healthPoints <= 0)
         {
             onDeathEvent.Invoke();
+        }
+        else {
+            healthSpriteRenderer.sprite = healthSprites[3 - healthPoints];
         }
         Debug.Log("Player damaged!");
         playerMovement.DropItemWhenDamaged();
