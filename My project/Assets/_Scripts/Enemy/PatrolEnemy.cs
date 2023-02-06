@@ -11,6 +11,7 @@ public class PatrolEnemy : MonoBehaviour
 
     Animator animator;
     Transform detectionCone;
+    ParticleSystem dmgParticles;
     public enum EnemyState
     {
         Patrol,Investigate,Chase, Waiting, Stunned 
@@ -53,6 +54,7 @@ public class PatrolEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        dmgParticles = GetComponentInChildren<ParticleSystem>();
         detectionCone = transform.GetChild(0).transform;
         agent = GetComponent <NavMeshAgent>();
         agent.updateRotation = false;
@@ -217,7 +219,7 @@ public class PatrolEnemy : MonoBehaviour
 
     public void Stun()
     {
-     
+        dmgParticles.Play();
         agent.SetDestination(transform.position);
         enemyState = EnemyState.Stunned;
         animator.SetTrigger("Stun");
