@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
+    ParticleSystem dmgParticles;
     public int healthPoints;
     public UnityEvent onDeathEvent=new UnityEvent();
     private SpriteRenderer sprite;
@@ -13,14 +14,16 @@ public class PlayerHealth : MonoBehaviour
     private PlayerMovement playerMovement;
 
     [SerializeField] Sprite[] healthSprites;
-    [SerializeField] SpriteRenderer healthSpriteRenderer;
+    [SerializeField] Image healthSpriteRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
+        healthPoints = 3;
         sprite = GetComponent<SpriteRenderer>();
         baseMaterial = sprite.material;
         playerMovement = GetComponent<PlayerMovement>();
+        dmgParticles = GetComponentInChildren<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -37,7 +40,9 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        dmgParticles.Play();
         healthPoints -= damage;
+        healthSpriteRenderer.sprite = healthSprites[3-healthPoints];
         StartCoroutine(TakingDamage());
         if(healthPoints<=0)
         {

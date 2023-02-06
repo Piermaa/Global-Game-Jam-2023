@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public SpriteRenderer playerSprite;
     public Sprite hidingSprite;
     Sprite emptyHidingSpotSprite;
     public SpriteRenderer hidingSpot;
