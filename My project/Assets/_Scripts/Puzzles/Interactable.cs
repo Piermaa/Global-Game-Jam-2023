@@ -16,9 +16,11 @@ public class Interactable : MonoBehaviour
     public bool dontFillOnStart;
     public Sprite alphaSprite;
     public Sprite betaSprite;
+
     // Start is called before the first frame update
     void Start()
     {
+        
         wire=GetComponentInParent<Wire>();
         objectSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
         objectSprite.sprite = null;

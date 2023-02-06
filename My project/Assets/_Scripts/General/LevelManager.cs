@@ -19,6 +19,10 @@ public class LevelManager : MonoBehaviour
     Vector3 playerCheckPoint;
     public  Sprite alphaSprite;
     public  Sprite betaSprite;
+
+    public Sprite alphaSocket;
+    public Sprite betaSocket;
+    public Sprite noneSocket;
     private void Awake()
     {
         if (Instance == null)
@@ -29,6 +33,18 @@ public class LevelManager : MonoBehaviour
         var inters=FindObjectsOfType<Interactable>();
         foreach (var i in inters)
         {
+            i.TryGetComponent<SpriteRenderer>(out var s);
+            switch (i.objectRequired)
+            {
+              
+                case ObjectClass.Alpha:
+                    s.sprite = alphaSocket;
+                    break;
+                case ObjectClass.Beta:
+                    s.sprite = betaSocket;
+                    break;
+            }
+
             i.alphaSprite = alphaSprite;
             i.betaSprite = betaSprite;
         }
